@@ -38,9 +38,11 @@ const Game = (() => {
     const check_win = () => { 
         if (get_win()[0] == 'x')  {
             setTimeout(function(){ alert("Player 1 wins!"); location.reload(); }, 500)
+            return false;
 
         }else if (get_win()[0] == 'o') {
             setTimeout(function(){ alert("Player 2 wins!"); location.reload(); }, 500)
+            return false;
         }
         let empty_array = [];
 
@@ -67,8 +69,6 @@ Game.check_win();
 
 
 const Person_creation = (name, mark) => {
-    let options = 0;
-
     return { name, mark }
 }
 

@@ -1,47 +1,56 @@
 const Game = (() => {
-    let gameboard = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+    let gameboard = ['', '', '', '', '', '', '', '', '']
 
-    const isUniqueArr = arr => {
-        const tmp = new Set(arr);
-        if(tmp.size > 1) {
-        return false;
+    function allEqual(array) {
+        if ((array[0] == 'x' && array[1] == 'x' && array[2] == 'x') || (array[0] == 'o' && array[1] == 'o' && array[2] == 'o')){
+            return true
         }
-        return true;
     }
 
     const get_win = () => {
-        if (isUniqueArr(gameboard.slice(0, 2)) == true) {
-            return [0, 1, 2]
+        if (allEqual(gameboard.slice(0, 3)) == true) {
+            return gameboard.slice(0, 3)
         } 
-        if (isUniqueArr(gameboard.slice(3, 5)) == true) {
-            return [3, 4, 5]
+        if (allEqual(gameboard.slice(3, 6)) == true) {
+            return gameboard.slice(3, 6)
         } 
-        if (isUniqueArr(gameboard.slice(6, 8)) == true) {
-            return [6, 7, 8]
+        if (allEqual(gameboard.slice(6, 9)) == true) {
+            return gameboard.slice(6, 9)
         } 
-        if (isUniqueArr([gameboard[0], gameboard[3], gameboard[6]]) == true) {
-            return [0, 3, 6]
+        if (allEqual([gameboard[0], gameboard[3], gameboard[6]]) == true) {
+            return [gameboard[0], gameboard[3], gameboard[6]]
         } 
-        if (isUniqueArr([gameboard[1], gameboard[4], gameboard[7]]) == true) {
-            return [1, 4, 7]
+        if (allEqual([gameboard[1], gameboard[4], gameboard[7]]) == true) {
+            return [gameboard[1], gameboard[4], gameboard[7]]
         } 
-        if (isUniqueArr([gameboard[2], gameboard[5], gameboard[8]]) == true) {
-            return [2, 5, 8]
+        if (allEqual([gameboard[2], gameboard[5], gameboard[8]]) == true) {
+            return [gameboard[2], gameboard[5], gameboard[8]]
         } 
-        if (isUniqueArr([gameboard[0], gameboard[4], gameboard[8]]) == true) {
-            return [0, 4, 8]
+        if (allEqual([gameboard[0], gameboard[4], gameboard[8]]) == true) {
+            return [gameboard[0], gameboard[4], gameboard[8]]
         } 
-        if (isUniqueArr([gameboard[2], gameboard[4], gameboard[6]]) == true) {
-            return [2, 4, 6]
+        if (allEqual([gameboard[2], gameboard[4], gameboard[6]]) == true) {
+            return [gameboard[2], gameboard[4], gameboard[6]]
         } 
         return []
     }
 
     const check_win = () => { 
-        if (get_win().length == 3 && get.win() == ['x', 'x', 'x']) {
-          alert(player1.name + ' Won!')
-        }else if (get_win().length == 3 && get.win() == ['o', 'o', 'o']) {
-            alert(player2.name + ' Won!')
+        if (get_win()[0] == 'x')  {
+            setTimeout(function(){ alert("Player 1 wins!"); location.reload(); }, 500)
+
+        }else if (get_win()[0] == 'o') {
+            setTimeout(function(){ alert("Player 2 wins!"); location.reload(); }, 500)
+        }
+        let empty_array = [];
+
+        for (let i = 0; i < 9; i++) {
+            if (gameboard[i] != '') {
+                empty_array.push(gameboard[i])
+            }
+        }
+        if (empty_array.length == 9){
+            setTimeout(function(){ alert("It's a draw!"); location.reload(); }, 500)
         }
     }
     
@@ -50,9 +59,11 @@ const Game = (() => {
         gameboard,
         get_win,
         check_win,
-        isUniqueArr
+        allEqual
     }
 })();
+
+Game.check_win();
 
 
 const Person_creation = (name, mark) => {
@@ -94,6 +105,8 @@ const DisplayController = (() => {
             btn[i].addEventListener('click', () => {
                 Game.gameboard[i] = who_is_first();
                 array_to_html();
+                console.log(Game.get_win());
+                Game.check_win();
             })
         } 
     }
@@ -102,7 +115,7 @@ const DisplayController = (() => {
     return {
         array_to_html, 
         on_hover,
-
+        who_is_first
     }
 })();
 DisplayController.on_hover();
